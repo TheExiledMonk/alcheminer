@@ -25,7 +25,7 @@ import socket
 import requests
 from requests.auth import HTTPBasicAuth
 
-VERSION = '1.2.0Beta'
+VERSION = '1.2.3beta'
 
 #------- hw.py --------
 #from serial import Serial
@@ -117,10 +117,11 @@ class AsicBoard(object):
             time.sleep(0.02)
             payload = '%s'%chp + 'ff0001000000a0220400' + g_tail
             self.write_by_hex(payload)
+	    '''
             time.sleep(0.02)
             payload = '%s'%chp + 'ff0001000000a0220000' + g_tail
             self.write_by_hex(payload)
-            ''' # Overdrive 10%
+             # Overdrive 10%
             payload = '%s'%chp + 'ff000100000000400c00' + g_tail
             self.write_by_hex(payload)
             time.sleep(0.02)
@@ -129,10 +130,11 @@ class AsicBoard(object):
             time.sleep(0.02)
             payload = '%s'%chp + 'ff000100000060110400' + g_tail
             self.write_by_hex(payload)
+	    '''
             time.sleep(0.02)
             payload = '%s'%chp + 'ff000100000060110000' + g_tail
             self.write_by_hex(payload)
-            '''
+
     def set_all_idle(self):
         payload = 'ffff0001000000a0220200' + g_tail
         self.write_by_hex(payload)
@@ -426,7 +428,7 @@ class Miner(Thread):
             self.targetstr = targetstr
             self.diff = 0x0000ffff00000000 / long(targetstr[48:64].decode('hex')[::-1].encode('hex'), 16)
             #self.work_timeout = self.diff * 65536 / 1000000 / 32
-            self.work_timeout = self.diff * 3.54 / brd[self.bid].good_cores
+            self.work_timeout = self.diff * 3.44 / brd[self.bid].good_cores
             if (self.work_timeout < 8):
                 self.work_timeout = 8
         t = '0' * 48 + targetstr[48:64]
